@@ -7,10 +7,10 @@ export default function Home() {
       {/* Navbar */}
       <nav className="flex items-center justify-between px-8 py-4 border-b border-gray-800">
         <h1 className="text-2xl font-bold text-blue-400">📈 PSX AI Suite</h1>
-        <div className="flex gap-6 text-gray-300">
-          <Link href="/dashboard" className="hover:text-blue-400">Dashboard</Link>
-          <Link href="/predict" className="hover:text-blue-400">Predict</Link>
-          <Link href="/watchlist" className="hover:text-blue-400">Watchlist</Link>
+        <div className="flex gap-4 text-gray-300">
+          <Link href="/dashboard" className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition">Dashboard</Link>
+          <Link href="/predict" className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-lg transition">Predict</Link>
+          <Link href="/watchlist" className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition">Watchlist</Link>
         </div>
       </nav>
 
@@ -27,7 +27,7 @@ export default function Home() {
           LSTM-powered next-day price predictions, Buy/Hold/Sell signals,
           and real-time sentiment analysis for PSX stocks.
         </p>
-        <div className="flex gap-4">
+        <div className="flex gap-4 flex-wrap justify-center">
           <Link href="/dashboard"
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-8 py-3 rounded-lg transition">
             Open Dashboard →
@@ -35,6 +35,10 @@ export default function Home() {
           <Link href="/watchlist"
             className="border border-gray-600 hover:border-blue-400 text-gray-300 px-8 py-3 rounded-lg transition">
             My Watchlist
+          </Link>
+          <Link href="/predict"
+            className="border border-blue-500 hover:bg-blue-500 text-blue-400 hover:text-white font-bold px-8 py-3 rounded-lg transition">
+            AI Predict 🤖
           </Link>
         </div>
       </section>
