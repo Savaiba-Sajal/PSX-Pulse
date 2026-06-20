@@ -1,26 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg-base: #0A0E14;
+  --bg-card: #141925;
+  --bg-card-hover: #1A2030;
+  --border-subtle: #232938;
+  --green: #00D982;
+  --green-dim: #00D98220;
+  --red: #FF3B5C;
+  --red-dim: #FF3B5C20;
+  --amber: #FFB020;
+  --amber-dim: #FFB02020;
+  --text-primary: #F5F7FA;
+  --text-secondary: #8B92A5;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }

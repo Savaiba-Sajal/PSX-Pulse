@@ -1,155 +1,199 @@
 import Link from 'next/link'
 
-const INDEX_DATA = {
-  value: 115420.35,
-  change: 423.50,
-  pct: 0.37,
-  volume: '2.3B',
-  marketCap: '8.1T',
-}
+const TICKER_DATA = [
+  { ticker: 'MARI', price: 658.47, pct: -0.99 },
+  { ticker: 'OGDC', price: 331.28, pct: -1.76 },
+  { ticker: 'HBL', price: 298.39, pct: -1.98 },
+  { ticker: 'ENGRO', price: 485.38, pct: 1.48 },
+  { ticker: 'PSO', price: 357.14, pct: -1.07 },
+  { ticker: 'LUCK', price: 462.98, pct: -1.82 },
+  { ticker: 'FFC', price: 560.74, pct: -1.26 },
+  { ticker: 'UBL', price: 438.18, pct: -1.54 },
+  { ticker: 'MCB', price: 402.93, pct: -1.03 },
+  { ticker: 'PPL', price: 241.94, pct: -2.86 },
+]
+
+const INDEX_DATA = { value: 115420.35, change: 423.50, pct: 0.37, volume: '2.3B', marketCap: '8.1T' }
 
 const GAINERS = [
-  { ticker: 'MARI',  price: 1250.50, change: +45.20, pct: +3.75 },
-  { ticker: 'HBL',   price: 156.80,  change: +5.60,  pct: +3.70 },
-  { ticker: 'ENGRO', price: 298.40,  change: +8.90,  pct: +3.08 },
+  { ticker: 'ENGRO', price: 485.38, change: 7.08, pct: 1.48 },
+  { ticker: 'MARI', price: 658.47, change: 4.20, pct: 0.64 },
+  { ticker: 'HBL', price: 298.39, change: 2.10, pct: 0.71 },
 ]
 
 const LOSERS = [
-  { ticker: 'PSO',   price: 432.10, change: -12.30, pct: -2.77 },
-  { ticker: 'OGDC',  price: 890.25, change: -18.50, pct: -2.04 },
-  { ticker: 'LUCK',  price: 542.00, change: -9.80,  pct: -1.78 },
+  { ticker: 'PPL', price: 241.94, change: -7.12, pct: -2.86 },
+  { ticker: 'LUCK', price: 462.98, change: -8.59, pct: -1.82 },
+  { ticker: 'HBL', price: 298.39, change: -6.03, pct: -1.98 },
 ]
 
-const TOP_STOCKS = [
-  { ticker: 'MARI',  price: 1250.50, sector: 'Oil & Gas' },
-  { ticker: 'OGDC',  price: 890.25,  sector: 'Oil & Gas' },
-  { ticker: 'HBL',   price: 156.80,  sector: 'Banking' },
-  { ticker: 'ENGRO', price: 298.40,  sector: 'Fertilizer' },
-  { ticker: 'PSO',   price: 432.10,  sector: 'Oil & Gas' },
-]
+function TickerTape() {
+  const row = [...TICKER_DATA, ...TICKER_DATA]
+  return (
+    <div style={{
+      background: 'var(--bg-card)',
+      borderBottom: '1px solid var(--border-subtle)',
+      overflow: 'hidden',
+      whiteSpace: 'nowrap',
+      padding: '10px 0',
+    }}>
+      <div style={{
+        display: 'inline-flex',
+        animation: 'ticker-scroll 40s linear infinite',
+      }}>
+        {row.map((s, i) => (
+          <span key={i} className="mono" style={{ padding: '0 28px', fontSize: 13, display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>{s.ticker}</span>
+            <span style={{ color: 'var(--text-primary)' }}>{s.price.toFixed(2)}</span>
+            <span style={{ color: s.pct >= 0 ? 'var(--green)' : 'var(--red)' }}>
+              {s.pct >= 0 ? '▲' : '▼'} {Math.abs(s.pct).toFixed(2)}%
+            </span>
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gray-950 text-white">
+    <main style={{ minHeight: '100vh', background: 'var(--bg-base)', color: 'var(--text-primary)' }}>
 
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-4 border-b border-gray-800">
-        <h1 className="text-2xl font-bold text-blue-400">📈 PSX Pulse</h1>
-        <div className="flex gap-4 text-gray-300">
-          <Link href="/dashboard" className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition">Dashboard</Link>
-          <Link href="/predict" className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-lg transition">Predict</Link>
-          <Link href="/watchlist" className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition">Watchlist</Link>
+      <nav style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '18px 32px', borderBottom: '1px solid var(--border-subtle)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--green)' }} />
+          <span style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.01em', color: '#FFFFFF' }}>PSX PULSE</span>
+        </div>
+        <div style={{ display: 'flex', gap: 4 }}>
+          <Link href="/dashboard" style={{ color: '#FFFFFF', padding: '8px 16px', borderRadius: 6, fontSize: 14, fontWeight: 500, textDecoration: 'none' }}>Dashboard</Link>
+          <Link href="/predict" style={{ background: 'var(--amber-dim)', color: 'var(--amber)', padding: '8px 16px', borderRadius: 6, fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>Predict</Link>
+          <Link href="/watchlist" style={{ color: '#FFFFFF', padding: '8px 16px', borderRadius: 6, fontSize: 14, fontWeight: 500, textDecoration: 'none' }}>Watchlist</Link>
         </div>
       </nav>
 
+      {/* Ticker tape — signature element */}
+      <TickerTape />
+
       {/* Hero */}
-      <section className="flex flex-col items-center justify-center text-center py-20 px-4">
-        <span className="text-sm bg-blue-900 text-blue-300 px-3 py-1 rounded-full mb-6">
-          Pakistan Stock Exchange — AI Powered
-        </span>
-        <h2 className="text-6xl font-extrabold mb-6 leading-tight">
-          Predict PSX Stocks<br />
-          <span className="text-blue-400">with AI</span>
-        </h2>
-        <p className="text-gray-400 text-xl max-w-xl mb-10">
-          LSTM-powered next-day price predictions, Buy/Hold/Sell signals,
-          and real-time sentiment analysis for PSX stocks.
+      <section style={{ padding: '64px 32px 48px', maxWidth: 1100, margin: '0 auto', textAlign: 'center' }}>
+        <div className="mono" style={{
+          display: 'inline-block', fontSize: 12, color: 'var(--green)', background: 'var(--green-dim)',
+          padding: '6px 14px', borderRadius: 4, marginBottom: 24, letterSpacing: '0.05em',
+        }}>
+          ● LIVE — PAKISTAN STOCK EXCHANGE
+        </div>
+        <h1 style={{ fontSize: 56, fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', margin: '0 0 20px', color: '#FFFFFF' }}>
+          AI-powered signals.<br />
+          <span style={{ color: 'var(--green)' }}>Real PSX data.</span>
+        </h1>
+        <p style={{ fontSize: 18, color: '#C5CAD6', maxWidth: 560, margin: '0 auto 36px', lineHeight: 1.6 }}>
+          Next-day price predictions, technical signals, and live market data
+          for every major stock on the Pakistan Stock Exchange.
         </p>
-        <div className="flex gap-4 flex-wrap justify-center">
-          <Link href="/dashboard"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold px-8 py-3 rounded-lg transition">
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link href="/dashboard" style={{
+            background: 'var(--green)', color: '#000000', padding: '14px 28px',
+            borderRadius: 8, fontWeight: 800, fontSize: 15, textDecoration: 'none',
+            display: 'inline-block',
+          }}>
             Open Dashboard →
           </Link>
-          <Link href="/watchlist"
-            className="border border-gray-600 hover:border-blue-400 text-gray-300 px-8 py-3 rounded-lg transition">
-            My Watchlist
-          </Link>
-          <Link href="/predict"
-            className="border border-blue-500 hover:bg-blue-500 text-blue-400 hover:text-white font-bold px-8 py-3 rounded-lg transition">
-            AI Predict 🤖
+          <Link href="/predict" style={{
+            border: '1px solid var(--border-subtle)', color: '#FFFFFF', padding: '14px 28px',
+            borderRadius: 8, fontWeight: 600, fontSize: 15, textDecoration: 'none',
+            display: 'inline-block', background: 'var(--bg-card)',
+          }}>
+            View AI Predictions
           </Link>
         </div>
       </section>
 
-      {/* PSX-100 Index Banner */}
-      <section className="max-w-6xl mx-auto px-8 mb-10">
-        <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      {/* PSX-100 Index Strip */}
+      <section style={{ maxWidth: 1100, margin: '0 auto 24px', padding: '0 32px' }}>
+        <div style={{
+          background: 'var(--bg-card)', border: '1px solid var(--border-subtle)',
+          borderRadius: 12, padding: '28px 32px',
+          display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 24,
+        }}>
+          <div>
+            <p style={{ fontSize: 13, color: '#C5CAD6', margin: '0 0 6px', fontWeight: 500 }}>PSX-100 INDEX</p>
+            <p className="mono" style={{ fontSize: 38, fontWeight: 700, margin: 0, color: '#FFFFFF' }}>{INDEX_DATA.value.toLocaleString()}</p>
+            <p className="mono" style={{ color: 'var(--green)', fontSize: 14, fontWeight: 600, margin: '4px 0 0' }}>
+              ▲ +{INDEX_DATA.change} (+{INDEX_DATA.pct}%) today
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 40 }}>
             <div>
-              <p className="text-gray-400 text-sm mb-1">PSX-100 Index</p>
-              <p className="text-5xl font-extrabold text-white">
-                {INDEX_DATA.value.toLocaleString()}
-              </p>
-              <p className="text-green-400 font-semibold mt-1">
-                ▲ +{INDEX_DATA.change} (+{INDEX_DATA.pct}%) today
-              </p>
+              <p style={{ fontSize: 12, color: '#C5CAD6', margin: '0 0 4px' }}>VOLUME</p>
+              <p className="mono" style={{ fontSize: 18, fontWeight: 600, margin: 0, color: '#FFFFFF' }}>{INDEX_DATA.volume}</p>
             </div>
-            <div className="flex gap-8">
-              <div>
-                <p className="text-gray-400 text-sm">Volume</p>
-                <p className="text-xl font-bold text-white">{INDEX_DATA.volume}</p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm">Market Cap</p>
-                <p className="text-xl font-bold text-white">PKR {INDEX_DATA.marketCap}</p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-sm">Status</p>
-                <p className="text-xl font-bold text-green-400">🟢 Open</p>
-              </div>
+            <div>
+              <p style={{ fontSize: 12, color: '#C5CAD6', margin: '0 0 4px' }}>MARKET CAP</p>
+              <p className="mono" style={{ fontSize: 18, fontWeight: 600, margin: 0, color: '#FFFFFF' }}>PKR {INDEX_DATA.marketCap}</p>
+            </div>
+            <div>
+              <p style={{ fontSize: 12, color: '#C5CAD6', margin: '0 0 4px' }}>STATUS</p>
+              <p className="mono" style={{ fontSize: 18, fontWeight: 600, margin: 0, color: 'var(--green)' }}>● OPEN</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Top 5 Stocks */}
-      <section className="max-w-6xl mx-auto px-8 mb-10">
-        <h2 className="text-xl font-bold mb-4 text-gray-200">🏆 Top PSX Stocks</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-          {TOP_STOCKS.map(s => (
-            <div key={s.ticker} className="bg-gray-900 border border-gray-800 hover:border-blue-500 rounded-xl p-4 transition">
-              <p className="text-blue-400 font-bold text-lg">{s.ticker}</p>
-              <p className="text-white font-semibold">PKR {s.price.toLocaleString()}</p>
-              <p className="text-gray-500 text-xs mt-1">{s.sector}</p>
-            </div>
+      {/* Top Stocks */}
+      <section style={{ maxWidth: 1100, margin: '0 auto 24px', padding: '0 32px' }}>
+        <p style={{ fontSize: 13, fontWeight: 600, color: '#C5CAD6', margin: '0 0 12px', letterSpacing: '0.03em' }}>TOP STOCKS</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: 12 }}>
+          {TICKER_DATA.slice(0, 5).map(s => (
+            <Link key={s.ticker} href={`/dashboard?symbol=${s.ticker}`} style={{
+              background: 'var(--bg-card)', border: '1px solid var(--border-subtle)',
+              borderRadius: 10, padding: '16px', textDecoration: 'none', color: 'inherit', display: 'block',
+            }}>
+              <p className="mono" style={{ fontSize: 14, fontWeight: 700, margin: '0 0 6px', color: '#FFFFFF' }}>{s.ticker}</p>
+              <p className="mono" style={{ fontSize: 17, fontWeight: 600, margin: '0 0 4px', color: '#FFFFFF' }}>{s.price.toFixed(2)}</p>
+              <p className="mono" style={{ fontSize: 13, fontWeight: 600, margin: 0, color: s.pct >= 0 ? 'var(--green)' : 'var(--red)' }}>
+                {s.pct >= 0 ? '▲' : '▼'} {Math.abs(s.pct).toFixed(2)}%
+              </p>
+            </Link>
           ))}
         </div>
       </section>
 
       {/* Gainers & Losers */}
-      <section className="max-w-6xl mx-auto px-8 pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 32px 64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 16 }}>
 
-          {/* Top Gainers */}
-          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-            <h2 className="text-lg font-bold mb-4 text-green-400">🚀 Top Gainers</h2>
-            {GAINERS.map(s => (
-              <div key={s.ticker} className="flex items-center justify-between py-3 border-b border-gray-800 last:border-0">
+          <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 12, padding: 24 }}>
+            <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--green)', margin: '0 0 16px', letterSpacing: '0.03em' }}>▲ TOP GAINERS</p>
+            {GAINERS.map((s, i) => (
+              <div key={s.ticker} style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                padding: '12px 0', borderTop: i === 0 ? 'none' : '1px solid var(--border-subtle)',
+              }}>
                 <div>
-                  <p className="font-bold text-white">{s.ticker}</p>
-                  <p className="text-gray-400 text-sm">PKR {s.price.toLocaleString()}</p>
+                  <p className="mono" style={{ fontWeight: 700, margin: 0, fontSize: 14, color: '#FFFFFF' }}>{s.ticker}</p>
+                  <p className="mono" style={{ color: '#C5CAD6', fontSize: 13, margin: '2px 0 0' }}>{s.price.toFixed(2)}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-green-400 font-bold">+{s.pct}%</p>
-                  <p className="text-green-400 text-sm">+{s.change}</p>
-                </div>
+                <p className="mono" style={{ color: 'var(--green)', fontWeight: 700, margin: 0, fontSize: 14 }}>+{s.pct.toFixed(2)}%</p>
               </div>
             ))}
           </div>
 
-          {/* Top Losers */}
-          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-            <h2 className="text-lg font-bold mb-4 text-red-400">📉 Top Losers</h2>
-            {LOSERS.map(s => (
-              <div key={s.ticker} className="flex items-center justify-between py-3 border-b border-gray-800 last:border-0">
+          <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)', borderRadius: 12, padding: 24 }}>
+            <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--red)', margin: '0 0 16px', letterSpacing: '0.03em' }}>▼ TOP LOSERS</p>
+            {LOSERS.map((s, i) => (
+              <div key={s.ticker} style={{
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                padding: '12px 0', borderTop: i === 0 ? 'none' : '1px solid var(--border-subtle)',
+              }}>
                 <div>
-                  <p className="font-bold text-white">{s.ticker}</p>
-                  <p className="text-gray-400 text-sm">PKR {s.price.toLocaleString()}</p>
+                  <p className="mono" style={{ fontWeight: 700, margin: 0, fontSize: 14, color: '#FFFFFF' }}>{s.ticker}</p>
+                  <p className="mono" style={{ color: '#C5CAD6', fontSize: 13, margin: '2px 0 0' }}>{s.price.toFixed(2)}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-red-400 font-bold">{s.pct}%</p>
-                  <p className="text-red-400 text-sm">{s.change}</p>
-                </div>
+                <p className="mono" style={{ color: 'var(--red)', fontWeight: 700, margin: 0, fontSize: 14 }}>{s.pct.toFixed(2)}%</p>
               </div>
             ))}
           </div>
